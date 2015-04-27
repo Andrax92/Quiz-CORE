@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="sp">
+  <head>
+    <title>Quiz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <style>body{padding-top:50px;}.starter-template{padding:40px 15px;text-align:center;}</style>
+
+    <!--[if IE]>
+        <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+    <body>
+        <div id="page-wrap">
+            <header class="main" id="h1">
+                <h2 class="text-center">Quiz: el juego de las preguntas</h2>
+            </header>
+
+            <nav class="navbar navbar-default" id="n1" role="navigation">
+               <div class="navbar-header">
+                   <button class="navbar-toggle" data-target=".navbar-ex1-collapse" data-toggle="collapse" type="button">
+                   <span class="sr-only">Desplegar navegación</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+               </div>
+               <div class="navbar-collapse navbar-ex1-collapse in" style="height:auto">
+                   <ul class="nav navbar-nav">
+                       <li><a href="/">Inicio</a></li>
+                       <li><a href="/quizes/question">Preguntas</a></li>
+                       <li><a href="/author">Créditos</a></li>
+                   </ul>
+               </div>
+            </nav>
+
+            <section class="main" id="s1">
+            <%- body %>
+            </section>
+
+            <footer class="main" id="f1"><a href="https://github.com/Andrax92/Quiz-CORE">QUIZ</a>
+            </footer>
+        </div>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    </body>
+</html>
