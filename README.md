@@ -1,1 +1,1 @@
-Sencillo program de preguntas y respuestas
+Sencillo programa de preguntas y respuestas
