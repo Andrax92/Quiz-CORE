@@ -1,0 +1,12 @@
+<div class="container">
+	<div class="text-center col-xs-12 table-responsive">
+		<table class="table table-hover">
+			<% var i; %>
+			<% for (i=0; i < quizes.length; i++){ %>
+			<tr>
+				<td><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
+			</tr>
+		<% } %>
+		</table>
+	</div>
+</div>
