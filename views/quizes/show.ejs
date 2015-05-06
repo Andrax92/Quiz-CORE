@@ -1,11 +1,7 @@
-    <div class="container">
-        <div class="text-center">
         <div class="form-group">
             <form method="get" action="/quizes/<%= quiz.id %>/answer" >
-                <p> Pregunta: <%= quiz.pregunta %> </p>
-                <input type="text" name="respuesta" placeholder="Responda aquí"/>
+                <%= quiz.pregunta %> <p>
+                <input type="text" name="respuesta" value="Respuesta" placeholder="Responda aquí"/>
                 <input type="submit" value="Enviar">
             </form>
         </div>
-        </div>
-    </div>
