@@ -1,7 +1,7 @@
         <div class="form-group">
             <form method="get" action="/quizes/<%= quiz.id %>/answer" >
                 <%= quiz.pregunta %> <p>
-                <input type="text" name="respuesta" value="Respuesta" placeholder="Responda aquí"/>
+                <input type="text" name="respuesta" value="Respuesta" onFocus="this.value=''" placeholder="Respuesta"/>
                 <input type="submit" value="Enviar">
             </form>
         </div>

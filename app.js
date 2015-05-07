@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var partials = require('express-partials');
 
 var routes = require('./routes/index');
@@ -15,9 +14,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-//Use partials
 app.use(partials());
-
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
@@ -45,7 +42,7 @@ if (app.get('env') === 'development') {
         res.render('error', {
             message: err.message,
             error: err,
-			errors: []
+            errors: []
         });
     });
 }
@@ -57,7 +54,7 @@ app.use(function(err, req, res, next) {
     res.render('error', {
         message: err.message,
         error: {},
-		errors: []
+        errors: []
     });
 });
 

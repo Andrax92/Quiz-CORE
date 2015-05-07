@@ -1,6 +1,6 @@
 		<label for="preg" > Pregunta:</label>
-		<input type="text" id="preg" name="quiz[pregunta]" value="<%= quiz.pregunta %>"/> <p>
+		<input type="text" id="preg" name="quiz[pregunta]" value="<%= quiz.pregunta %>" onFocus="this.value=''" placeholder="Pregunta"/> <p>
 		<label for="resp">Respuesta:</label>
-		<input type="text" id="resp" name="quiz[respuesta]" value="<%= quiz.respuesta %>"/> <p>
+		<input type="text" id="resp" name="quiz[respuesta]" value="<%= quiz.respuesta %>" onFocus="this.value=''" placeholder="Respuesta" /> <p>
 		<a href="/quizes"><button type="button">Cancelar</button></a>
 		<input type="submit" value="Guardar"/>
