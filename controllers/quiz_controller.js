@@ -42,18 +42,16 @@ exports.answer = function(req, res) {
 };
 
 // GET /quizes -- search
-/*
 exports.search = function(req, res) {
 	query = req.query.search;
 	if((typeof query == "string") && (query.trim() == "")){
-		models.query.findAll({where:["pregunta like ?", '%' + query + '%'], order: 'pregunta ASC'}).then(function() {
+		models.Quiz.findAll({where:["pregunta like ?", '%' + query + '%'], order: 'pregunta ASC'}).then(function() {
 							  res.render('/quizes/index', {quizes: quizes, errors: []});
 							 });
 	} else {
 							  res.render('/quizes/index', {quizes: quizes, errors: []});
 							 }
 };
-*/
 
 // GET /quizes/new
 exports.new = function(req, res) {
