@@ -4,7 +4,7 @@ var router = express.Router();
 var quizController = require('../controllers/quiz_controller');
 
 // Página de entrada (home page)
-router.get('/', function(req, res) {
+router.get('/', function(req, res, next) {
   res.render('index', { title: 'Quiz', errors: []});
 });
 
@@ -13,16 +13,17 @@ router.param('quizId', quizController.load);  // autoload :quizId
 
 // Definición de rutas de /quizes
 router.get('/quizes',                      quizController.index);
-router.get('/quizes:search?', 			   quizController.search);
 router.get('/quizes/:quizId(\\d+)',        quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
+//Crear preguntas
 router.get('/quizes/new',                  quizController.new);
 router.post('/quizes/create',              quizController.create);
+//Editar preguntas
 router.get('/quizes/:quizId(\\d+)/edit',   quizController.edit);
 router.put('/quizes/:quizId(\\d+)',        quizController.update);
 
 /*GET /author */
-router.get('/author', function(req, res) {
+router.get('/author', function(req, res, next) {
     res.render('author', { title: 'Créditos', errors: [] });
 });
 

@@ -12,15 +12,6 @@ exports.load = function(req, res, next, quizId) {
   ).catch(function(error){next(error)});
 };
 
-// GET /quizes
-exports.index = function(req, res) {
-  models.Quiz.findAll().then(
-    function(quizes) {
-      res.render('quizes/index.ejs', {quizes: quizes, errors: []});
-    }
-  ).catch(function(error){next(error)});
-};
-
 // GET /quizes/:id
 exports.show = function(req, res) {
   res.render('quizes/show', { quiz: req.quiz, errors: []});
@@ -41,16 +32,20 @@ exports.answer = function(req, res) {
   );
 };
 
-// GET /quizes -- search
-exports.search = function(req, res) {
-	query = req.query.search;
-	if((typeof query == "string") && (query.trim() == "")){
-		models.Quiz.findAll({where:["pregunta like ?", '%' + query + '%'], order: 'pregunta ASC'}).then(function() {
-							  res.render('/quizes/index', {quizes: quizes, errors: []});
-							 });
+// GET /quizes
+exports.index = function(req, res) {
+	console.log("GET INDEX");
+	var query = req.query.search;
+	if(query){
+		models.Quiz.findAll({where:["pregunta like ?", '%' + query + '%']}).then(function(quizes) {
+							  res.render('quizes', {quizes: quizes, errors: []});
+							 })
 	} else {
-							  res.render('/quizes/index', {quizes: quizes, errors: []});
-							 }
+		models.Quiz.findAll().then(
+			function(quizes) {
+			res.render('quizes', {quizes: quizes, errors: []});
+		}).catch(function(error){next(error);})
+	}
 };
 
 // GET /quizes/new
