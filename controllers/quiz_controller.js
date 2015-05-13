@@ -21,16 +21,17 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 exports.index = function(req, res) {
-	console.log("GET INDEX");
 	var query = req.query.search;
 	if(query){
+		console.log("buscando...");
 		models.Quiz.findAll({where:["pregunta like ?", '%' + query + '%']}).then(function(quizes) {
 							  res.render('quizes', {quizes: quizes, errors: []});
 							 })
 	} else {
+		console.log("nada que buscar");
 		models.Quiz.findAll().then(
 			function(quizes) {
-			res.render('quizes', {quizes: quizes, errors: []});
+			res.render('quizes/index', {quizes: quizes, errors: []});
 		}).catch(function(error){next(error);})
 	}
 };
