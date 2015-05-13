@@ -1,5 +1,5 @@
  		<div class="col-xs-12">
-                   	<form method="get" action="quizes" value="Capital" class="navbar-form">
+                   	<form method="get" action="quizes" class="navbar-form">
                    		<div class="input-group">
 							<input type="text" name="search" id="search" class="form-control" placeholder="Buscar"></input>
                    				<div class="input-group-btn">
@@ -14,14 +14,18 @@
 			<% var i; %>
 			<% for (i=0; i < quizes.length; i++){ %>
 			<tr>
-				<td><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
-				<td><a href="quizes/<%= quizes[i].id %>/edit"><button class="btn btn-primary" type="button">Editar</button></a></td>
+				<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
+				<%if(session.user){%>
+				<td><a href="/quizes/<%= quizes[i].id %>/edit"><button class="btn btn-primary" type="button">Editar</button></a></td>
 				<td>
-					<form action="quizes/<%= quizes[i].id %>?_method=delete" method="post">
+					<form action="/quizes/<%= quizes[i].id %>?_method=delete" method="post">
 					<button class="btn btn-danger" type="submit" onClick="return confirm('Borrar: <%= quizes[i].pregunta %>');">Borrar</button></form>
 				</td>
+				<%}%>
 			</tr>
 		<% } %>
-		</table><p>
+		</table><p/>
 	</div>
+	<%if(session.user){%>
 		<a href="/quizes/new"><button class="btn btn-success" type="button">Crear pregunta</button></a>
+	<%}%>
