@@ -1,3 +1,4 @@
+    <div>
         <div class="form-group">
             <form method="get" action="/quizes/<%= quiz.id %>/answer" >
                 <%= quiz.pregunta %> <p>
@@ -5,3 +6,11 @@
                 <input type="submit" value="Enviar">
             </form>
         </div>
+        <p><a href="/quizes/<%= quiz.id %>/comments/new"><button class="btn btn-default">Nuevo Comentario</button></a></p>
+        
+        <p><strong>Comentarios:</strong></p>
+        <% for(index in quiz.Comments){ %>
+	<p>- <%= quiz.Comments[index].texto %> </p>
+		<%}%>
+    </div>
+        
