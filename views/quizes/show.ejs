@@ -9,10 +9,14 @@
         <p><a href="/quizes/<%= quiz.id %>/comments/new"><button class="btn btn-default">Nuevo Comentario</button></a></p>
         
         <p><strong>Comentarios:</strong></p>
+        <% if(quiz.Comments.length === 0){ %>
+            <p>Sin Comentarios</p>
+        <%  } else { %>
         <% for(index in quiz.Comments){ %>
         	<% if(quiz.Comments[index].publicado){%>
 				<p>- <%= quiz.Comments[index].texto %> 
-					<% if(session.user && (session.user.isAdmin || (session.user && quiz.userId === session.user.id))){%>
+					<%} else if(session.user && (session.user.isAdmin || (session.user && quiz.userId === session.user.id))){%>
+						<p>- <%= quiz.Comments[index].texto %>
 						<a href="/quizes/<%= quiz.id %>/comments/<%=quiz.Comments[index].id%>/publish"><button class="btn-btn-primary">Publicar</button></a>
 					<%}%>
 				</p>
