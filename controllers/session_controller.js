@@ -32,7 +32,7 @@ exports.create = function (req, res) {
 		
 		// Crear req.session.user y guardar campos id y username
 		// La sesión se define por la existancia de: req.session.user
-		req.session.user = {id: user.id, username: user.username, initSession: initSession};
+		req.session.user = {id: user.id, username: user.username, initSession: initSession, isAdmin: user.isAdmin};
 		
 		res.redirect(req.session.redir.toString());
 	});
@@ -53,8 +53,8 @@ exports.autoLogout = function(req, res, next) {
 		next();
 	} else {
 		var resta = actual - req.session.user.initSession;
-		req.session.user.timeLogin=date; 
-		if(difference < 120000) {
+		req.session.user.timeLogin = actual; 
+		if(resta < 120000) {
 			next();
 		} else {
 			delete req.session.user;

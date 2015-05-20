@@ -15,12 +15,14 @@
 			<% for (i=0; i < quizes.length; i++){ %>
 			<tr>
 				<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
-				<%if(session.user){%>
+				<%if(session.user){
+					if (session.user.isAdmin || sesion.user.id === quizes[i].UserId) {%>
 				<td><a href="/quizes/<%= quizes[i].id %>/edit"><button class="btn btn-primary" type="button">Editar</button></a></td>
 				<td>
 					<form action="/quizes/<%= quizes[i].id %>?_method=delete" method="post">
 					<button class="btn btn-danger" type="submit" onClick="return confirm('Borrar: <%= quizes[i].pregunta %>');">Borrar</button></form>
 				</td>
+					<%}%>
 				<%}%>
 			</tr>
 		<% } %>

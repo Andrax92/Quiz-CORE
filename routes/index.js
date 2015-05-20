@@ -29,14 +29,14 @@ router.get('/quizes/:quizId(\\d+)/answer', sessionController.autoLogout, quizCon
 router.get('/quizes/new',                  sessionController.autoLogout, sessionController.loginRequired, quizController.new);
 router.post('/quizes/create',              sessionController.autoLogout, sessionController.loginRequired, quizController.create);
 //Editar preguntas
-router.get('/quizes/:quizId(\\d+)/edit',   sessionController.autoLogout, sessionController.loginRequired, quizController.edit);
-router.put('/quizes/:quizId(\\d+)',        sessionController.autoLogout, sessionController.loginRequired, quizController.update);
-router.delete('/quizes/:quizId(\\d+)',     sessionController.autoLogout, sessionController.loginRequired, quizController.destroy);
+router.get('/quizes/:quizId(\\d+)/edit',   sessionController.autoLogout, quizController.ownershipRequired, sessionController.loginRequired, quizController.edit);
+router.put('/quizes/:quizId(\\d+)',        sessionController.autoLogout, quizController.ownershipRequired, sessionController.loginRequired, quizController.update);
+router.delete('/quizes/:quizId(\\d+)',     sessionController.autoLogout, quizController.ownershipRequired, sessionController.loginRequired, quizController.destroy);
 // Comentarios
 router.get('/quizes/:quizId(\\d+)/comments/new', sessionController.autoLogout, commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments',    sessionController.autoLogout, commentController.create);
 router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',    
-		   								sessionController.autoLogout, sessionController.loginRequired, commentController.publish);
+		   								sessionController.autoLogout, userController.ownershipRequired, sessionController.loginRequired, commentController.publish);
 
 // Autologout:
 router.get('/quizes/statistics', sessionController.autoLogout, quizController.statistics);
@@ -44,9 +44,9 @@ router.get('/quizes/statistics', sessionController.autoLogout, quizController.st
 // Definición de rutas de cuenta
 router.get('/user', 					userController.new);
 router.post('/user', 					userController.create);
-router.get('/user/:userId(\\d+)/edit',  sessionController.loginRequired, userController.edit);
-router.put('/user/:userId(\\d+)', 		sessionController.loginRequired, userController.update);
-router.delete('/user/:userId(\\d+)', 	sessionController.loginRequired, userController.destroy);
+router.get('/user/:userId(\\d+)/edit',  sessionController.autoLogout, sessionController.loginRequired, userController.ownershipRequired, userController.edit);
+router.put('/user/:userId(\\d+)', 		sessionController.loginRequired, userController.ownershipRequired, userController.update);
+router.delete('/user/:userId(\\d+)', 	sessionController.loginRequired, userController.ownershipRequired, userController.destroy);
 
 
 /*GET /author */
