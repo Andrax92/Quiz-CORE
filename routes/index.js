@@ -1,4 +1,5 @@
 var express = require('express');
+var multer = require('multer');
 var router = express.Router();
 
 var quizController = require('../controllers/quiz_controller');
@@ -28,10 +29,10 @@ router.get('/quizes/:quizId(\\d+)/answer', sessionController.autoLogout, quizCon
 
 //Crear preguntas
 router.get('/quizes/new',                  sessionController.autoLogout, sessionController.loginRequired, quizController.new);
-router.post('/quizes/create',              sessionController.autoLogout, sessionController.loginRequired, quizController.create);
+router.post('/quizes/create',              sessionController.autoLogout, sessionController.loginRequired, multer({ dest: './public/media'}), quizController.create);
 //Editar preguntas
 router.get('/quizes/:quizId(\\d+)/edit',   sessionController.autoLogout, quizController.ownershipRequired, sessionController.loginRequired, quizController.edit);
-router.put('/quizes/:quizId(\\d+)',        sessionController.autoLogout, quizController.ownershipRequired, sessionController.loginRequired, quizController.update);
+router.put('/quizes/:quizId(\\d+)',        sessionController.autoLogout, quizController.ownershipRequired, sessionController.loginRequired, multer({ dest: './public/media'}), quizController.update);
 router.delete('/quizes/:quizId(\\d+)',     sessionController.autoLogout, quizController.ownershipRequired, sessionController.loginRequired, quizController.destroy);
 
 // Comentarios
