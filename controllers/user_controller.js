@@ -3,7 +3,7 @@ var models = require('../models/models.js');
 // MW que permite acciones solamente si el quiz objeto
 //pertenece al usuario logueado o si es cuenta admin
 exports.ownershipRequired = function(req, res, next) {
-	var objQuizOwner = req.quiz.UserId;
+	var objQuizOwner = req.user.id;
 	var logUser = req.session.user.id;
 	var isAdmin = req.session.user.isAdmin;
 	
