@@ -20,7 +20,7 @@ exports.load = function(req, res, next, quizId) {
 };
 
 // GET /quizes
-exports.index = function(req, res) {
+exports.index = function(req, res, next) {
 	var query = req.query.search;
 	if(query){
 		console.log("buscando...");
@@ -47,8 +47,7 @@ exports.answer = function(req, res) {
   if (req.query.respuesta === req.quiz.respuesta) {
     resultado = 'Correcto';
   }
-  res.render(
-    'quizes/answer', 
+  res.render('quizes/answer', 
     { quiz: req.quiz, 
       respuesta: resultado, 
       errors: []
@@ -118,3 +117,51 @@ exports.destroy = function(req, res) {
 		res.redirect('/quizes');
 	}).catch(function(error) {next(error)});
 };
+
+// GET quizes/statistics
+exports.statistics = function(req, res, next){
+    
+    // numero de preguntas
+    models.Quiz.findAll().then(function(quizes){
+        var numPreg = quizes.length;
+        
+        // Numero de comentarios totales
+        models.Comment.findAll().then(function(comments){
+            var numCom = comments.length;
+            
+            //media
+            var mediaComPreg = numCom/numPreg;
+           
+            // numero de preguntas sin comentarios
+            var pregSinCom = 0;
+            var pregConCom = 0;
+            for(var i = 0; i<quizes.length; i++){   
+                quizes[i].getComments().then(function(quizesComment){
+                    if(quizesComment.length === 0){
+                        pregSinCom++;
+                        calculoEstadisticas(i, numPreg, numCom, mediaComPreg, pregSinCom, pregConCom, quizes.length-1);
+                    }
+                    else{
+                        pregConCom++;
+                        calculoEstadisticas(i, numPreg, numCom, mediaComPreg, pregSinCom, pregConCom, quizes.length-1);
+                    }
+                });
+            }
+           
+            
+        });
+    }).catch(function(error){next(error)});
+    
+    function calculoEstadisticas(i, numPreg, numCom, mediaComPreg, pregSinCom, pregConCom, quizLength){
+        if(pregConCom+pregSinCom === i){
+            res.render('quizes/statistics', {
+                numPreg:       numPreg,
+                numCom:        numCom,
+                mediaComPreg:  mediaComPreg,
+                pregSinCom:    pregSinCom,
+                pregConCom:    pregConCom,
+                errors:        []
+            });     
+    }
+	};	
+}

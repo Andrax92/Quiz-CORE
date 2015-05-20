@@ -19,6 +19,8 @@ exports.new = function (req, res) {
 exports.create = function (req, res) {
 	var login = req.body.login;
 	var password = req.body.password;
+	var d = new Date();
+	var initSession = d.getTime();
 	
 	var userController = require('./user_controller');
 	userController.autenticar(login, password, function (error, user) {
@@ -30,7 +32,7 @@ exports.create = function (req, res) {
 		
 		// Crear req.session.user y guardar campos id y username
 		// La sesión se define por la existancia de: req.session.user
-		req.session.user = {id: user.id, username: user.username};
+		req.session.user = {id: user.id, username: user.username, initSession: initSession};
 		
 		res.redirect(req.session.redir.toString());
 	});
@@ -40,4 +42,24 @@ exports.create = function (req, res) {
 exports.destroy = function (req, res) {
 	delete req.session.user;
 	res.redirect(req.session.redir.toString());
+};
+
+// Auto Logout
+exports.autoLogout = function(req, res, next) {
+	var d = new Date();
+	var actual = d.getTime();
+	
+	if (!req.session.user) {
+		next();
+	} else {
+		var resta = actual - req.session.user.initSession;
+		req.session.user.timeLogin=date; 
+		if(difference < 120000) {
+			next();
+		} else {
+			delete req.session.user;
+			res.redirect('/login');
+			console.log('Autologout del usuario: ' + req.session.user.login);
+		}
+	} 
 };
