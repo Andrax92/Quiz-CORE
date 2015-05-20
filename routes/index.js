@@ -4,6 +4,7 @@ var router = express.Router();
 var quizController = require('../controllers/quiz_controller');
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
+var userController = require('../controllers/user_controller');
 
 // Página de entrada (home page)
 router.get('/', function(req, res, next) {
@@ -13,6 +14,7 @@ router.get('/', function(req, res, next) {
 // Autoload de comandos con :quizId
 router.param('quizId', quizController.load);  // autoload :quizId
 router.param('commentId', commentController.load);
+router.param('userId', userController.load);
 
 // Definición de rutas de sesión
 router.get('/login',  sessionController.autoLogout, sessionController.new);
@@ -38,6 +40,13 @@ router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',
 
 // Autologout:
 router.get('/quizes/statistics', sessionController.autoLogout, quizController.statistics);
+
+// Definición de rutas de cuenta
+router.get('/user', 					userController.new);
+router.post('/user', 					userController.create);
+router.get('/user/:userId(\\d+)/edit',  sessionController.loginRequired, userController.edit);
+router.put('/user/:userId(\\d+)', 		sessionController.loginRequired, userController.update);
+router.delete('/user/:userId(\\d+)', 	sessionController.loginRequired, userController.destroy);
 
 
 /*GET /author */

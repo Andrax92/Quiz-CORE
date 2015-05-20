@@ -1,0 +1,11 @@
+Editar la información de la cuenta <p>
+<form method="post" action="/user/<%=user.id%>?=_method=put">
+	<% include _form.ejs %>
+</form>
+
+
+<form action="/user/<%=user.id%>?_method=delete" method="post">
+	<button type="submit" class="btn btn-warning" onClick="return confirm('Borrar cuenta: <%=user.username%>');">
+		Borrar Cuenta
+	</button>
+</form>
