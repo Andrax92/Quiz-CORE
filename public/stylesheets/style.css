@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+.grey {
+	color: gray;
+}
+
+.yellow {
+	color: yellow;
+}

@@ -48,6 +48,10 @@
                        <li><a href="/quizes">Preguntas</a></li>
                        <li><a href="/author">Créditos</a></li>
                        <li><a href="/quizes/statistics">Estadísticas</a></li>
+                       <%if(session.user){%>
+						<li><a href="/user/<%=session.user.id%>/quizes">Mis Preguntas</a></li>
+                  		<li><a href="/user/<%=session.user.id%>/favourites">Favoritos</a></li>
+                  	   <%}%>
                    </ul>
                </div>
             </nav>
@@ -71,7 +75,12 @@
             <footer class="main text-center" id="f1"><a href="https://github.com/Andrax92/Quiz-CORE">QUIZ</a>
             </footer>
         </div>
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>
+		$('.btn-sm').click( function(){
+    $(this).find('i').toggleClass('grey').toggleClass('yellow');
+		});
+	</script>
     </body>
 </html>

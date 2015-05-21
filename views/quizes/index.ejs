@@ -14,7 +14,11 @@
 			<% var i; %>
 			<% for (i=0; i < quizes.length; i++){ %>
 			<tr>
-				<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
+				<td><%if(session.user){%>
+					<button class="btn btn-default btn-sm" type=""><i class="glyphicon glyphicon-star grey"></i>
+                   	</button>
+               		<%}%>
+					<a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
 				<%if(session.user){
 					if (session.user.isAdmin || session.user.id === quizes[i].UserId) {%>
 				<td><a href="/quizes/<%= quizes[i].id %>/edit"><button class="btn btn-primary" type="button">Editar</button></a></td>
