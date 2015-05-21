@@ -1,5 +1,5 @@
-    	<% if(quiz.image)%>
-        <p><img src="/media/<%quiz.image%>" alt="imagen quiz <%quiz.id%>"></p>
+    	<% if(quiz.image) {%>
+        <p><img class="img-responsive center-block" src="/media/<%=quiz.image%>" alt="imagen quiz <%quiz.id%>"></p>
         <%}%>
     <div>
         <div class="form-group">
