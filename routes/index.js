@@ -50,6 +50,7 @@ router.post('/user', 					userController.create);
 router.get('/user/:userId(\\d+)/edit',  sessionController.autoLogout, sessionController.loginRequired, userController.ownershipRequired, userController.edit);
 router.put('/user/:userId(\\d+)', 		sessionController.loginRequired, userController.ownershipRequired, userController.update);
 router.delete('/user/:userId(\\d+)', 	sessionController.loginRequired, userController.ownershipRequired, userController.destroy);
+router.get('/user/:userId(\\d+)/quizes', quizController.index);
 
 
 /*GET /author */
