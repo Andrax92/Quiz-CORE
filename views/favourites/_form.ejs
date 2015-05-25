@@ -1,0 +1,17 @@
+<% 
+    if(session.user){
+        var method = (favs[i]) ? "delete" : "put";
+   
+    %>
+<div class="form-group">
+<form method="post" action="/user/<%= session.user.id %>/favourites/<%= quizes[i].id %>?_method=<%= method %>">
+<% if(favs[i]){ %>
+<input id= "radio1" type= "submit" name= "estrellas" value="&#9733;" class="yellow"/>
+<% } else { %>
+<input id= "radio1" type= "submit" name= "estrellas" value="&#9734;" class="gray" />
+<% } %>
+
+</form>
+</div>
+
+<% } %>

@@ -35,29 +35,56 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 // GET /users/:userId/quizes
-exports.index = function(req, res, next) {
-	var query = req.query.search;
-	var options = {};
-	if(query){
-		console.log("buscando...");
-		models.Quiz.findAll({where:["pregunta like ?", '%' + query + '%']}).then(function(quizes) {
-							  res.render('quizes', {quizes: quizes, errors: []});
-							 })
-	} else {
-		console.log("nada que buscar");
-		if(req.user) {
-			options.where = {UserId: req.user.id}
-		}
-		models.Quiz.findAll(options).then(
-			function(quizes) {
-			res.render('quizes/index', {quizes: quizes, errors: []});
-		}).catch(function(error){next(error);})
-	}
+exports.index = function(req, res, next){
+    var options = {};
+    var searchQuizes = [];
+    
+    if(req.user){
+        options.where = {UserId: req.user.id}
+    }
+    
+    if(req.query.search){
+        var search = '%'+req.query.search+'%';
+         // Aqui ponemos que busque las preguntas que contienen la palabra buscada
+        models.Quiz.findAll({
+            where: ["pregunta like ?", search],
+            order: 'pregunta ASC'
+        })
+            .then(function(quizes){
+            if(req.session.user){
+                var user= req.session.user;
+                findQuizesIndex(req, res, user, options, quizes);
+            }else{
+                res.render('quizes', {quizes: quizes, errors: []});
+            }
+        })
+    }else if(req.session.user){
+        var user = req.session.user;
+        findQuizesIndex(req, res, user, options, searchQuizes);        
+    } else{
+        models.Quiz.findAll(options).then(function(quizes){
+            res.render('quizes', {quizes: quizes, errors: []}); 
+        }).catch(function(error){ next(error)})
+    }      
 };
 
 // GET /quizes/:id
-exports.show = function(req, res) {
-  res.render('quizes/show', { quiz: req.quiz, errors: []});
+exports.show = function(req, res){
+  models.Quiz.find(req.params.quizId).then(function(quiz){
+      
+      // para poder coger el quiz con quizes[0]
+      var quizUnique = req.quiz;
+      var quizes = [quizUnique];
+      // si hay usuario, poner la estrellita
+      if(req.session.user){
+          var user = req.session.user;
+          isFavInShow(req, res, user, quizUnique);   
+         
+      }
+      else{
+          res.render('quizes/show', {quizes: quizes, errors: []});
+      }
+  })  
 };
 
 // GET /quizes/:id/answer
@@ -189,4 +216,58 @@ exports.statistics = function(req, res, next){
             });     
     }
 	};	
-}
+};
+
+function findQuizesIndex(req, res, user, options, searchQuizes){
+  models.Quiz.findAll(options).then(function(quizes){
+        var user = req.session.user;
+            models.User.find({
+                where: { id: Number(user.id)},
+                include: [{ model: models.Quiz }]
+            }).then(
+                function(user){
+                    user.getQuizzes().then(function(quizesFav){
+                        var favs = [];
+                        for(var j =0; j<quizes.length; j++){
+                            for(var x = 0; x<quizesFav.length; x++){
+                                if(quizes[j].id === quizesFav[x].id){
+                                    favs.push(true);
+                                }       
+                            }
+                            if(favs.length === j){
+                                favs.push(false); 
+                            }
+                        }
+                        if(searchQuizes.length === 0){
+                            res.render('quizes', {quizes: quizes, errors: [], favs: favs});
+                        } else {
+                            res.render('quizes', {quizes: searchQuizes, errors: [], favs: favs});
+                        }
+                    });
+                }
+            )
+            
+        });  
+};
+
+function isFavInShow(req, res, user, quiz){
+    var quizes = [quiz];
+    models.User.find({
+                where: { id: Number(user.id)},
+                include: [{ model: models.Quiz }]
+            }).then(
+                function(user){
+                    user.getQuizzes().then(function(quizesFav){
+                        var favs = [];
+                        for(var x = 0; x<quizesFav.length; x++){
+                            if(quiz.id === quizesFav[x].id){
+                                favs.push(true);         
+                            }       
+                        }
+                        if(favs.length === 0){
+                            favs.push(false); 
+                        }
+                         res.render('quizes/show', {quizes: quizes, errors: [], favs: favs});
+                    });
+                });
+ }

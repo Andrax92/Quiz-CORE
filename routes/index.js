@@ -53,9 +53,9 @@ router.put('/user/:userId(\\d+)', 		sessionController.loginRequired, userControl
 router.delete('/user/:userId(\\d+)', 	sessionController.loginRequired, userController.ownershipRequired, userController.destroy);
 router.get('/user/:userId(\\d+)/quizes', quizController.index);
 //Favoritos
-router.get('/user/:userId(\\d+)/favourites', sessionController.autoLogout, sessionController.loginRequired, favouritesController.favourites);
-router.delete('/user/:userId(\\d+)/favourites/quizId', sessionController.autoLogout, sessionController.loginRequired);
-router.put('/user/:userId(\\d+)/favourites/quizId', sessionController.autoLogout, sessionController.loginRequired);
+router.get('/user/:userId(\\d+)/favourites', sessionController.autoLogout, sessionController.loginRequired, favouritesController.index);
+router.delete('/user/:userId(\\d+)/favourites/quizId(\\d+)', sessionController.autoLogout, sessionController.loginRequired, favouritesController.remove);
+router.put('/user/:userId(\\d+)/favourites/quizId(\\d+)', sessionController.autoLogout, sessionController.loginRequired, favouritesController.add);
 
 /*GET /author */
 router.get('/author', function(req, res, next) {
