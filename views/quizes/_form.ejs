@@ -2,6 +2,15 @@
 		<input type="text" id="preg" name="quiz[pregunta]" value="<%= quiz.pregunta %>" onFocus="this.value=''" placeholder="Pregunta"/> <p>
 		<label for="resp">Respuesta:</label>
 		<input type="text" id="resp" name="quiz[respuesta]" value="<%= quiz.respuesta %>" onFocus="this.value=''" placeholder="Respuesta" /> <p>
+		<label for="cat" >Categoría:</label>
+<select id="cat" name="quiz[categoria]" value="<%= quiz.categoria %>" placeholder="Respuesta" />
+  <option value="Otro" selected>Otro</option>
+  <option value="Humanidades">Humanidades</option>
+  <option value="Ocio">Ocio</option>
+  <option value="Ciencia">Ciencia</option>
+  <option value="Tecnologia">Tecnología</option>
+</select>
+<p>
 		<label for="image">Imagen:</label>
 		<input type="file" accept="image/*" name="image" /><p>
 		<a href="/quizes"><button class="btn btn-warning" type="button">Cancelar</button></a>

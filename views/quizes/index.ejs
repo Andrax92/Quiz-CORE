@@ -18,7 +18,7 @@
 					<% include ../favourites/_form.ejs %>
 				</td>
 				<td>
-					<a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
+					<a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta+ " (" +quizes[i].categoria+")"  %></a></td>
 				<%if(session.user){
 					if (session.user.isAdmin || session.user.id === quizes[i].UserId) {%>
 				<td><a href="/quizes/<%= quizes[i].id %>/edit"><button class="btn btn-primary" type="button">Editar</button></a></td>
